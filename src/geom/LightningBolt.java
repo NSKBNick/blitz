@@ -25,7 +25,7 @@ public class LightningBolt {
     static private List<Point2D.Double> halveSegment(List<Point2D.Double> path, int index){
         Point2D.Double previousPoint = path.get(index);
         Point2D.Double nextPoint = path.get(index + 1);
-        double newX = (previousPoint.x + (nextPoint.x * Math.random() - previousPoint.x));
+        double newX = (previousPoint.x + (nextPoint.x * 2 * Math.random() - previousPoint.x));
         double newY = (previousPoint.y + (nextPoint.y * Math.random() - previousPoint.y));
         Point2D.Double newPoint = new Point2D.Double(newX, newY);
         path.add(index + 1, newPoint);

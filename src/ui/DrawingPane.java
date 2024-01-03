@@ -24,10 +24,10 @@ public class DrawingPane extends JPanel {
         g2d.setStroke(stroke);
 
         // get calculated lightning shape as general path and draw it
-        GeneralPath lightningPath = LightningBolt.createBolt(0,0,300,300);
+        GeneralPath lightningPath = LightningBolt.createBolt(300,0,300,300);
         g2d.draw(lightningPath);
 
         // endless loop: This results in paint()-method being called again
-        repaint();
+        //repaint();
     }
 }
