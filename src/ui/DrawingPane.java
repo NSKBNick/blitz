@@ -1,6 +1,6 @@
 package ui;
 
-import geom.LightningBolt;
+import geom.BoltSegment;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,10 +24,15 @@ public class DrawingPane extends JPanel {
         g2d.setStroke(stroke);
 
         // get calculated lightning shape as general path and draw it
-        GeneralPath lightningPath = LightningBolt.createBolt(0,0,300,300);
+        GeneralPath lightningPath = BoltSegment.createBoltSegment(150,0,150,300,20);
         g2d.draw(lightningPath);
 
         // endless loop: This results in paint()-method being called again
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         repaint();
     }
 }
