@@ -37,7 +37,7 @@ public class DrawingPane extends JPanel {
 
         g.setColor(Color.YELLOW);
         Graphics2D g2d = (Graphics2D) g;
-        Stroke stroke = new BasicStroke(3, BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER);
+        Stroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER);
         g2d.setStroke(stroke);
 
         if(bolt != null) {
