@@ -6,9 +6,29 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BoltSegment {
-    static public GeneralPath createBoltSegment(double startX, double startY,
-                                                double endX, double endY,
-                                                int intermediatePoints){
+
+    public static final int INTERMEDIATE_POINTS = 20;
+
+    public BoltSegment successor = null;
+    private GeneralPath path;
+    public int order = 0;
+
+    public Point2D.Double endPoint = new Point2D.Double(0.0 ,0.0);
+    public BoltSegment(double startX, double startY,
+                       double endX, double endY,
+                       int intermediatePoints, int order){
+        path = createBoltSegmentPath(startX, startY, endX, endY, intermediatePoints);
+        endPoint.x = endX;
+        endPoint.y  = endY;
+        this.order = order;
+    }
+
+    public GeneralPath getPath(){
+        return path;
+    }
+    static public GeneralPath createBoltSegmentPath(double startX, double startY,
+                                                    double endX, double endY,
+                                                    int intermediatePoints){
         List<Point2D.Double> path = new LinkedList<>();
         path.add(new Point2D.Double(startX, startY));
         path.add(new Point2D.Double(endX, endY));
@@ -31,14 +51,18 @@ public class BoltSegment {
                                                        int index, double yDelta){
         Point2D.Double startPoint = path.get(0);
         Point2D.Double endPoint = path.get(path.size()-1);
-        double newX = startPoint.x + (endPoint.x - startPoint.x) * yDelta * (index + 1) + 200 * randomDev() * yDelta;
+        double newX = startPoint.x + (endPoint.x - startPoint.x) * yDelta * (index + 1) + 20 * randomDeviate(yDelta);
         double newY = startPoint.y + (endPoint.y - startPoint.y) * yDelta * (index + 1);
         Point2D.Double newPoint = new Point2D.Double(newX, newY);
         path.add(index + 1, newPoint);
         return path;
     }
 
-    static double randomDev(){
+    public static double randomDeviate(double delta) {
+        return  randomDev() * delta;
+    }
+
+    public static double randomDev(){
         return 1 - 2 * Math.random();
     }
     static private GeneralPath pathToGeneralPath(List<Point2D.Double> path){
@@ -53,5 +77,9 @@ public class BoltSegment {
             }
         }
         return generalPath;
+    }
+
+    public String toString(){
+        return "SEG(" + order + "): " + "( " + endPoint.x + " | " + endPoint.y + " )" ;
     }
 }
