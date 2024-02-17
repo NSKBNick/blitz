@@ -1,15 +1,9 @@
 package ui;
 
-import geom.BoltSegment;
 import geom.LightningBolt;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.geom.GeneralPath;
-
-import static geom.BoltSegment.INTERMEDIATE_POINTS;
 
 public class DrawingPane extends JPanel {
 
@@ -19,12 +13,7 @@ public class DrawingPane extends JPanel {
     public DrawingPane(){
         super();
         setLayout(new BorderLayout());
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                drawLightning();
-            }
-        });
+        button.addActionListener(e -> drawLightning());
         add(button, BorderLayout.SOUTH);
         revalidate();
         repaint();
@@ -32,7 +21,7 @@ public class DrawingPane extends JPanel {
 
     private void drawLightning(){
         if(bolt == null || bolt.isGroundReached()){
-            bolt = new LightningBolt(150.0,0.0, getRootPane().getHeight());
+            bolt = new LightningBolt(getRootPane().getWidth() / 2.0,0.0, getRootPane().getHeight());
         } else {
             bolt.addRandomSegment();
             System.out.println(bolt + ": " + bolt.getYMax());
@@ -51,7 +40,9 @@ public class DrawingPane extends JPanel {
         Stroke stroke = new BasicStroke(3, BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER);
         g2d.setStroke(stroke);
 
-        if(bolt != null)
+        if(bolt != null) {
+            System.out.println("Drawing " + bolt);
             bolt.draw(g2d);
+        }
     }
 }

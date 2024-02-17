@@ -10,8 +10,8 @@ public class BoltSegment {
     public static final int INTERMEDIATE_POINTS = 20;
 
     public BoltSegment successor = null;
-    private GeneralPath path;
-    public int order = 0;
+    final private GeneralPath path;
+    public int order;
 
     public Point2D.Double endPoint = new Point2D.Double(0.0 ,0.0);
     public BoltSegment(double startX, double startY,
@@ -51,7 +51,7 @@ public class BoltSegment {
                                                        int index, double yDelta){
         Point2D.Double startPoint = path.get(0);
         Point2D.Double endPoint = path.get(path.size()-1);
-        double newX = startPoint.x + (endPoint.x - startPoint.x) * yDelta * (index + 1) + 20 * randomDeviate(yDelta);
+        double newX = startPoint.x + (endPoint.x - startPoint.x) * yDelta * (index + 1) + LightningBolt.NUM_SEGMENTS * randomDeviate(yDelta);
         double newY = startPoint.y + (endPoint.y - startPoint.y) * yDelta * (index + 1);
         Point2D.Double newPoint = new Point2D.Double(newX, newY);
         path.add(index + 1, newPoint);
