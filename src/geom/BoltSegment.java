@@ -10,8 +10,8 @@ public class BoltSegment {
     public static final int INTERMEDIATE_POINTS = 20;
 
     public BoltSegment successor = null;
-    private GeneralPath path;
-    public int order = 0;
+    final private GeneralPath path;
+    public int order;
 
     public Point2D.Double endPoint = new Point2D.Double(0.0 ,0.0);
     public BoltSegment(double startX, double startY,

@@ -9,8 +9,9 @@ import static geom.BoltSegment.randomDeviate;
 
 public class LightningBolt {
 
-    private double yGround;
-    private double deltaY;
+    private final double yGround;
+    private final double deltaY;
+    private final ConcurrentLinkedQueue<BoltSegment> segments = new ConcurrentLinkedQueue <>();
 
     public LightningBolt(double startX, double startY, double yGround){
         BoltSegment initialSegment = new BoltSegment(startX, startY, startX, yGround / 10.0, INTERMEDIATE_POINTS, 0);
@@ -18,8 +19,6 @@ public class LightningBolt {
         this.deltaY = yGround / 10.0;
         segments.add(initialSegment);
     }
-
-    private ConcurrentLinkedQueue<BoltSegment> segments = new ConcurrentLinkedQueue <BoltSegment>();
 
     public void draw(Graphics2D g2d){
         for(BoltSegment segment: segments) {
