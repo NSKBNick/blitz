@@ -29,10 +29,11 @@ public class LightningBolt {
 
     public void addRandomSegment(){
         for(BoltSegment segment: segments){
-            int numberOfNewSegments = (int) (Math.random() * 2.999);
-            for(int i=0; i < numberOfNewSegments; i++){
-                if(segment.successor == null)
-                    addNewSegment(segment);
+            int numberOfNewSegments = (int) (Math.random() * Math.random() *2.999);
+            if(segment.successor == null && segment.order < 4 && notToFarFromMainEnd(segment) ){
+             for(int i=0; i < numberOfNewSegments; i++) {
+                addNewSegment(segment);
+             }
             }
         }
     }
@@ -78,5 +79,9 @@ public class LightningBolt {
             }
         }
         return null;  // should never be reached
+    }
+    private boolean notToFarFromMainEnd (BoltSegment segment){
+
+        return   segment.endPoint.y > getYMax()/2;
     }
 }
