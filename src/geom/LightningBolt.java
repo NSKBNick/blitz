@@ -21,12 +21,19 @@ public class LightningBolt {
         segments.add(initialSegment);
     }
 
-    public void draw(Graphics2D g2d){
+    public void drawSteppedLeader(Graphics2D g2d){
         for(BoltSegment segment: segments) {
             g2d.draw(segment.getPath());
         }
     }
-
+    public void drawMainBolt(Graphics2D g2d){
+        BoltSegment segment = getLastSegment();
+        g2d.draw(segment.getPath());
+        while (segment.predecessor != null) {
+            segment = segment.predecessor;
+            g2d.draw(segment.getPath());
+        }
+    }
     public void addRandomSegment(){
         for(BoltSegment segment: segments){
             int numberOfNewSegments = (int) (Math.random() * Math.random() *2.999);
@@ -50,7 +57,15 @@ public class LightningBolt {
         }
         return yMax;
     }
-
+    public BoltSegment getLastSegment(){
+        BoltSegment lastSegment = segments.peek();
+        for(BoltSegment segment: segments){
+            if(segment.endPoint.y > lastSegment.endPoint.y) {
+                lastSegment = segment;
+            }
+        }
+        return lastSegment;
+    }
     public String toString(){
         return "Bolt(" + segments.size() + "), maxY = " + getYMax();
     }
@@ -63,6 +78,7 @@ public class LightningBolt {
         newEnd.x = newStart.x + randomDeviate(deltaY);
         BoltSegment newSegment = new BoltSegment(newStart.x, newStart.y, newEnd.x, newEnd.y, INTERMEDIATE_POINTS, newOrder);
         segment.successor = newSegment;
+        newSegment.predecessor = segment;
         segments.add(newSegment);
         normalizeOrder();
     }

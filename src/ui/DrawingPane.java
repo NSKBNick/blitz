@@ -35,14 +35,21 @@ public class DrawingPane extends JPanel {
         g.setColor(Color.BLACK);
         g.fillRect(0,0, this.getWidth(), this.getHeight() - button.getHeight());
 
-        g.setColor(Color.YELLOW);
+        g.setColor(new Color(179, 255, 255));
         Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         Stroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER);
         g2d.setStroke(stroke);
 
         if(bolt != null) {
             System.out.println("Drawing " + bolt);
-            bolt.draw(g2d);
+            bolt.drawSteppedLeader(g2d);
+            if (bolt.isGroundReached()){
+                g.setColor(Color.WHITE);
+                g2d.setStroke(stroke);
+                bolt.drawMainBolt(g2d);
+            }
         }
+
     }
 }
